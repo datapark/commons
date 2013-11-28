@@ -1,0 +1,17 @@
+{
+  "name": "commons",
+  "version": "0.0.0",
+  "main": "main.js",
+  "repository": "",
+  "author": "emax & noii",
+  "license": "BSD",
+  "dependencies": {
+    "angular":"",
+    "underscore": "~1.5.2",
+    "jquery":"~1.8.2",
+    "backbone":"",
+    "request":"",
+    "ws":"",
+    "express":""
+  }
+}
