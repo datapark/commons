@@ -12,6 +12,8 @@
     "backbone":"",
     "request":"",
     "ws":"",
-    "express":""
+    "express":"",
+    "pg":"brianc/node-progres",
+    "node-sql": "brianc/node-sql"
   }
 }
