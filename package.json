@@ -14,6 +14,7 @@
     "ws":"",
     "express":"",
     "pg":"brianc/node-progres",
-    "node-sql": "brianc/node-sql"
+    "node-sql": "brianc/node-sql",
+    "express":"3.x"
   }
 }

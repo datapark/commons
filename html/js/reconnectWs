@@ -1,0 +1,29 @@
+				var reconnect = function() {
+					this_.getToken().then(function() {
+						// new token will trigger a refreshing/reconnection
+						return;
+					}).fail(function(errorCode) {
+						// connection failure, server's still down.
+						if (errorCode.status === 0) {
+							console.error('connection failure, server still down');
+							return setTimeout(reconnect, 1000);
+						}
+						if (errorCode.status === 404) {
+							console.info('server back up! tokens are expired.');
+							// tokens aren't valid any more, let's try to reconnect.
+							if (store.get('user_type') === 'openid') {
+								console.info('Reconnecting using OpenID >> ');
+								store.reconnect().then(function() {
+									this_.getToken()
+										.then(function() {	return;	})
+										.fail(function() { u.error('failed to get a token this time, give up.');});
+								}).fail(function() { 
+									u.error('failed to failed to re-authenticate, give up.');
+								});
+							} else {
+								console.error('Local user, cannot reauthenitcate');
+								store.trigger('ask-user-to-log-in');
+							}
+						}
+					});
+				};

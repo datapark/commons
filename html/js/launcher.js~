@@ -1,0 +1,46 @@
+angular.module('launcher', ['ui','indx'])
+	.directive('user',function() {
+		return {
+			restrict:'E',
+			templateUrl:'templates/user.html',
+			replace:true
+		};
+	}).directive('loginbox',function() {
+		return {
+			restrict:'E',
+			replace:true,
+			templateUrl:'templates/userlist.html',
+			link:function($scope, $element) { $scope.el = $element;	},
+			controller: function($scope, client, backbone, utils) {
+				var u = utils, store = client.store, sa = function(f) { return utils.safe_apply($scope,f); };				
+				$scope.select_user = function(u) {
+					u.debug('select_user! ', u);
+					$scope.user_selected = u;
+				};				
+				// this gets called when the form is submitted
+				$scope.onSubmit = function() {
+					u.debug('onsubmit! u:', $scope.user_selected, 'p: ', password);
+					store.login(user_selected, password).then(function() {
+						u.debug('login okay!');
+						// next thing that happen is that indx triggers a login
+					}).fail(function() {
+						u.shake($scope.el);
+					});
+				};
+				store.get_user_list().then(function(result) {
+					u.debug('users > ', result);
+					sa(function() { $scope.users = result; });
+				}).fail(function(err) { u.error(err); })
+			}
+		};
+	}).directive('appslist',function() {
+		return {
+			restrict:'E',
+			replace:true,
+			templateUrl:'templates/appslist.html',
+			scope:{ user:'model' },
+			link:function($scope, $element) { $scope.el = $element;	},
+			controller: function($scope, client, backbone, utils) {}
+		};
+	}).controller('main', function($scope, client, utils) {});
+
