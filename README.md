@@ -9,7 +9,7 @@ install postgres. then log in as the postgres user and create the datapark user;
 
 	psql -U postgres -h localhost
 	create role datapark login;
-	create role datapark owner datapark;
+	create database datapark owner datapark;
 
 then create the databases/tables in datapark
 
